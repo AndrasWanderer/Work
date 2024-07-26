@@ -40,7 +40,7 @@ def entry(start_sum):
 
 def percent_rep(start_sum,count_replainishment):
     if count_replainishment % 3 == 0:
-                start_sum = start_sum * (3 + start_sum) / start_sum
+                start_sum = start_sum + (start_sum * 3 / 100)
                 return start_sum
 
 def wealth_tax(start_sum):    
@@ -55,7 +55,3 @@ def wealth_tax(start_sum):
 start_sum = 0
 result = entry(start_sum)
 print(result)
-
-
-
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Попробуй разбить entry на подфункции

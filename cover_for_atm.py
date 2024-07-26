@@ -5,71 +5,73 @@ import traceback
 ############################ Блок логики ATM #################################
 
 start_sum = 0
+count_replainishment = 0
+
+def balance(operation):
+    atm_balance.delete(0, tk.END)
+    atm_balance.insert(0, f"Ваш баланс: {start_sum}")
 
 
+def wealth_tax(start_sum):
+    if int(start_sum) >= 5000000:
+        start_sum = start_sum - (start_sum * 10 / 100)
+        return start_sum
+    else:
+        return start_sum
 
-def balance (operation):
-    atm_balance.delete(0,tk.END)
-    atm_balance.insert(0,f"Ваш баланс: {start_sum}")
 
-# def wealth_tax(start_sum):    
-#     if start_sum >= 5000000:
-#         start_sum = start_sum - (start_sum * 10 / 100)
-#         return start_sum
-
-# def percent_rep(start_sum,count_replainishment):
-#     if count_replainishment % 3 == 0:
-#                 start_sum = start_sum * (3 + start_sum) / start_sum
-#                 return start_sum
+def percent_rep(start_sum,count_replainishment):
+     if count_replainishment % 3 == 0:
+        start_sum = start_sum + (start_sum * 3 / 100)
+        return start_sum
+     else:
+         return start_sum
 
 def check_sum(operation):
     global start_sum
-    # count_replainishment = 0
+    global count_replainishment
     value = atm_entry.get()
     a = test(int(value))
     if a != None:
-        atm_entry.delete(0,tk.END)
-        atm_entry.insert(0,a)
+        atm_entry.delete(0, tk.END)
+        atm_entry.insert(0, a)
     try:
         start_sum += int(value)
-        if start_sum >= 5000000:
-            start_sum = start_sum - (start_sum * 10 / 100)
-        # start_sum = wealth_tax(start_sum)
-        # count_replainishment += 1
-        # start_sum = percent_rep(start_sum,count_replainishment)
+        start_sum = int(wealth_tax(start_sum))
+        count_replainishment += 1
+        start_sum = percent_rep(start_sum,count_replainishment)
         print(start_sum)
     except:
         traceback.print_exc()
-        atm_entry.delete(0,tk.END)
-        atm_info.insert(0,"Некорректный ввод")
-    
+        atm_entry.delete(0, tk.END)
+        atm_info.insert(0, "Некорректный ввод")
+
+
 def del_sum(operation):
     global start_sum
-    # count_replainishment = 0
+    global count_replainishment
     value = atm_entry.get()
     a = test(int(value))
     if a != None:
-        atm_entry.delete(0,tk.END)
-        atm_entry.insert(0,a)
-    
-    
-    elif start_sum < int(atm_entry.get()) :
-        atm_balance.delete(0,tk.END)
-        atm_info.insert(0,f"Ошибка! Недостаточно средств!")
-        
+        atm_entry.delete(0, tk.END)
+        atm_entry.insert(0, a)
+
+
+    elif start_sum < int(atm_entry.get()):
+        atm_balance.delete(0, tk.END)
+        atm_info.insert(0, f"Ошибка! Недостаточно средств!")
+
     else:
         try:
             start_sum -= int(value)
-            if start_sum >= 5000000:
-                start_sum = start_sum - (start_sum * 10 / 100)
-            # start_sum = wealth_tax(start_sum)
-            # count_replainishment += 1
-            # start_sum = percent_rep(start_sum,count_replainishment)
+            start_sum = wealth_tax(start_sum)
+            count_replainishment += 1
+            start_sum = percent_rep(start_sum,count_replainishment)
             print(start_sum)
         except:
             traceback.print_exc()
-            atm_entry.delete(0,tk.END)
-            atm_info.insert(0,"Некорректный ввод")
+            atm_entry.delete(0, tk.END)
+            atm_info.insert(0, "Некорректный ввод")
     
 
 
