@@ -6,6 +6,7 @@ import traceback
 
 start_sum = 0
 count_replainishment = 0
+amount = 0
 
 def balance(operation):
     atm_balance.delete(0, tk.END)
@@ -19,6 +20,13 @@ def wealth_tax(start_sum):
     else:
         return start_sum
 
+def withdrawal_percent(start_sum,amount):
+    if amount > 30 and amount < 600:
+                amount = amount - (amount * 1.5 / 100)
+                start_sum -= amount
+                return start_sum
+    else:
+        return start_sum
 
 def percent_rep(start_sum,count_replainishment):
      if count_replainishment % 3 == 0:
@@ -50,6 +58,7 @@ def check_sum(operation):
 def del_sum(operation):
     global start_sum
     global count_replainishment
+    global amount
     value = atm_entry.get()
     a = test(int(value))
     if a != None:
@@ -64,6 +73,7 @@ def del_sum(operation):
     else:
         try:
             start_sum -= int(value)
+            start_sum = withdrawal_percent(start_sum,amount)
             start_sum = wealth_tax(start_sum)
             count_replainishment += 1
             start_sum = percent_rep(start_sum,count_replainishment)
